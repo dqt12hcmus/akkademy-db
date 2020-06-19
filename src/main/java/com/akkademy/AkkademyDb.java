@@ -1,8 +1,12 @@
 package com.akkademy;
 
 import akka.actor.AbstractActor;
+import akka.actor.Status;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
+import akka.japi.pf.ReceiveBuilder;
+import com.akkademy.exceptions.KeyNotFoundException;
+import com.akkademy.messages.GetRequest;
 import com.akkademy.messages.SetRequest;
 
 import java.util.HashMap;
@@ -18,10 +22,19 @@ public class AkkademyDb extends AbstractActor {
 
     @Override
     public Receive createReceive() {
-        return receiveBuilder().match(SetRequest.class, message -> {
+        Receive receive;
+
+        receive = receiveBuilder().match(SetRequest.class, message -> {
             log.info("Received set request - key: {} vale: {}", message.getKey(), message.getValue());
             map.put(message.getKey(), message.getValue());
 
-        }).matchAny(object -> log.info("Received unknown message {}", 0)).build();
+        }).match(GetRequest.class, message -> {
+            log.info("Received get request - {}", message);
+            String value = (String)map.get(message.key);
+            Object response = value != null ? value : new Status.Failure(new KeyNotFoundException(message.key));
+            sender().tell(response, self());
+        }).matchAny(object -> sender().tell(new Status.Failure(new ClassNotFoundException()), self())).build();
+
+        return receive;
     }
 }

@@ -1,5 +1,14 @@
 plugins {
     id 'java'
+    id 'application'
+}
+
+apply plugin: "java"
+ext {
+    javaMainClass = "com.akkademy.Main"
+}
+application {
+    mainClassName = javaMainClass
 }
 
 group 'org.example'
@@ -12,6 +21,7 @@ repositories {
 dependencies {
     compile group: 'com.typesafe.akka', name: 'akka-actor_2.13', version: '2.6.6'
     compile group: 'com.typesafe.akka', name: 'akka-http_2.13', version: '10.2.0-M1'
+    compile group: 'com.typesafe.akka', name: 'akka-remote_2.13', version: '2.6.6'
     testCompile group: 'com.typesafe.akka', name: 'akka-testkit_2.13', version: '2.6.6'
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.0-M1'
