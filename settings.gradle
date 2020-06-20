@@ -1,2 +1,3 @@
-rootProject.name = 'akkademy-db'
-
+rootProject.name = 'akkademy'
+include 'akkademy-db'
+include 'akkademy-common'
