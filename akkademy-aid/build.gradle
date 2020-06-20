@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+ext {
+    javaMainClass = "com.akkademy.Main"
+}
+
+application {
+    mainClassName = javaMainClass
+}
+
+dependencies {
+    compile group: 'com.typesafe.akka', name: 'akka-actor_2.13', version: '2.6.6'
+    compile group: 'com.typesafe.akka', name: 'akka-http_2.13', version: '10.2.0-M1'
+    compile group: 'com.typesafe.akka', name: 'akka-remote_2.13', version: '2.6.6'
+    compile group: 'org.scala-lang.modules', name: 'scala-java8-compat_2.11', version: '0.3.0'
+    compile project(':akkademy-common')
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

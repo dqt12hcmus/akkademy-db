@@ -16,6 +16,7 @@ subprojects {
 dependencies {
     compile project(':akkademy-common')
     compile project(':akkademy-db')
+    compile project(':akkademy-aid')
 }
 
 group 'org.example'
